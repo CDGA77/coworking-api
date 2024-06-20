@@ -10,7 +10,9 @@ import {
 import { SesionService } from './sesion.service';
 import { CreateSesionDto } from './dto/create-sesion.dto';
 import { UpdateSesionDto } from './dto/update-sesion.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('sesion')
 @Controller('sesion')
 export class SesionController {
   constructor(private readonly sesionService: SesionService) {}

@@ -10,7 +10,9 @@ import {
 import { EspacioTrabajoService } from './espacio-trabajo.service';
 import { CreateEspacioTrabajoDto } from './dto/create-espacio-trabajo.dto';
 import { UpdateEspacioTrabajoDto } from './dto/update-espacio-trabajo.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Espaciotrabajo')
 @Controller('espacio-trabajo')
 export class EspacioTrabajoController {
   constructor(private readonly espacioTrabajoService: EspacioTrabajoService) {}

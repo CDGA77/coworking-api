@@ -10,7 +10,9 @@ import {
 import { SalaService } from './sala.service';
 import { CreateSalaDto } from './dtos/create-sala.dto';
 import { UpdateSalaDto } from './dtos/update-sala.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('sala')
 @Controller('sala')
 export class SalaController {
   constructor(private readonly salaService: SalaService) {}
