@@ -5,10 +5,10 @@ import {
   ManyToOne,
   OneToMany,
 } from 'typeorm';
-import { Sala } from './sala.entity';
+import { sala } from './sala.entity';
 import { Reserva } from './reserva.entity';
 
-@Entity()
+@Entity({ name: 'espaciotrabajo' })
 export class EspacioTrabajo {
   @PrimaryGeneratedColumn()
   id_espacio: number;
@@ -19,8 +19,8 @@ export class EspacioTrabajo {
   @Column()
   columna: number;
 
-  @ManyToOne(() => Sala, (sala) => sala.espacios)
-  sala: Sala;
+  @ManyToOne(() => sala, (sala) => sala.espacios)
+  sala: sala;
 
   @OneToMany(() => Reserva, (reserva) => reserva.espacio)
   reservas: Reserva[];

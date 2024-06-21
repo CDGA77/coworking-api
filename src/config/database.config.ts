@@ -1,4 +1,9 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
+import { EspacioTrabajo } from 'src/entities/espacio-trabajo.entity';
+import { Reserva } from 'src/entities/reserva.entity';
+import { sala } from 'src/entities/sala.entity';
+import { Sesion } from 'src/entities/sesion.entity';
+import { Usuario } from 'src/entities/usuario.entity';
 
 export const databaseConfig: TypeOrmModuleOptions = {
   type: 'postgres',
@@ -7,8 +12,9 @@ export const databaseConfig: TypeOrmModuleOptions = {
   username: 'default',
   password: 'He1B5ZEMNCfQ',
   database: 'verceldb',
-  entities: [__dirname + '/**/*.entity{.ts,.js}'],
+  entities: [sala, Reserva, EspacioTrabajo, Sesion, Usuario],
   synchronize: true,
+
   extra: {
     ssl: true,
   },

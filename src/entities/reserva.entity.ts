@@ -3,7 +3,7 @@ import { Usuario } from './usuario.entity';
 import { EspacioTrabajo } from './espacio-trabajo.entity';
 import { Sesion } from './sesion.entity';
 
-@Entity()
+@Entity({ name: 'reserva' })
 export class Reserva {
   @PrimaryGeneratedColumn()
   id_reserva: number;

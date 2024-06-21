@@ -16,39 +16,39 @@ export class EspacioTrabajoService {
   async getEspaciosDisponibles(salaId: number, sesionId: number) {
     return this.espacioTrabajoRepository
       .createQueryBuilder('et')
-      .leftJoinAndSelect('et.reservas', 'r', 'r.id_sesion = :sesionId', {
-        sesionId,
-      })
+      .leftJoinAndSelect('et.reservas', 'r', 'r.id_sesion = :sesionId', { sesionId })
       .where('et.id_sala = :salaId', { salaId })
       .andWhere('r.id_reserva IS NULL')
+      .groupBy('et.id')
       .getMany();
   }
 
   async getEspaciosOcupados(salaId: number, sesionId: number) {
     return this.espacioTrabajoRepository
       .createQueryBuilder('et')
-      .innerJoinAndSelect('et.reservas', 'r', 'r.id_sesion = :sesionId', {
-        sesionId,
-      })
+      .innerJoinAndSelect('et.reservas', 'r', 'r.id_sesion = :sesionId', { sesionId })
       .where('et.id_sala = :salaId', { salaId })
+      .groupBy('et.id, r.id_reserva')
       .getMany();
   }
 
   async getEspaciosPorUsuario(idUsuario: number) {
     return this.espacioTrabajoRepository
       .createQueryBuilder('et')
-      .innerJoinAndSelect('et.reservas', 'r', 'r.id_usuario = :idUsuario', {
-        idUsuario,
-      })
+      .innerJoinAndSelect('et.reservas', 'r', 'r.id_usuario = :idUsuario', { idUsuario })
+      .groupBy('et.id, r.id_reserva')
       .getMany();
   }
 
   async getEspaciosPorSesion(idSesion: number) {
     return this.espacioTrabajoRepository
       .createQueryBuilder('et')
-      .innerJoinAndSelect('et.reservas', 'r', 'r.id_sesion = :idSesion', {
-        idSesion,
-      })
+      .innerJoinAndSelect('et.reservas', 'r', 'r.id_sesion = :idSesion', { idSesion })
+      .groupBy('et.id, r.id_reserva')
       .getMany();
+  }
+
+  async getAllEspacios() {
+    return this.espacioTrabajoRepository.find();
   }
 }

@@ -17,7 +17,7 @@ export class SesionService {
     return this.sesionRepository
       .createQueryBuilder('s')
       .leftJoinAndSelect('s.reservas', 'r')
-      .groupBy('s.id_sesion')
+      .groupBy('s.id_sesion, r.id_reserva') // Incluir r.id_reserva en GROUP BY
       .orderBy('COUNT(r.id_reserva)', 'DESC')
       .getMany();
   }
@@ -26,7 +26,7 @@ export class SesionService {
     return this.sesionRepository
       .createQueryBuilder('s')
       .leftJoinAndSelect('s.reservas', 'r')
-      .groupBy('s.id_sesion')
+      .groupBy('s.id_sesion, r.id_reserva') // Incluir r.id_reserva en GROUP BY
       .orderBy('COUNT(r.id_reserva)', 'ASC')
       .getMany();
   }

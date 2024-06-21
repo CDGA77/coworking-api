@@ -1,10 +1,11 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 import { Reserva } from './reserva.entity';
 
-@Entity()
+@Entity({ name: 'sesion' })
 export class Sesion {
   @PrimaryGeneratedColumn()
   id_sesion: number;
+  
 
   @Column({ type: 'timestamp' })
   fecha_inicio: Date;

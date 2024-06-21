@@ -1,8 +1,8 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 import { EspacioTrabajo } from './espacio-trabajo.entity';
 
-@Entity()
-export class Sala {
+@Entity({ name: 'sala' })
+export class sala {
   @PrimaryGeneratedColumn()
   id_sala: number;
 
