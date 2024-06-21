@@ -10,7 +10,7 @@ import { ReservaModule } from './modules/reserva/reserva.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRoot(databaseConfig),
     SalaModule,
     EspacioTrabajoModule,

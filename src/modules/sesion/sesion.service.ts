@@ -2,35 +2,32 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Sesion } from '../../entities/sesion.entity';
-import { CreateSesionDto } from './dto/create-sesion.dto';
-import { UpdateSesionDto } from './dto/update-sesion.dto';
+import { Reserva } from '../../entities/reserva.entity';
 
 @Injectable()
 export class SesionService {
   constructor(
     @InjectRepository(Sesion)
-    private sesionRepository: Repository<Sesion>,
+    private readonly sesionRepository: Repository<Sesion>,
+    @InjectRepository(Reserva)
+    private readonly reservaRepository: Repository<Reserva>,
   ) {}
 
-  create(createSesionDto: CreateSesionDto): Promise<Sesion> {
-    const sesion = this.sesionRepository.create(createSesionDto);
-    return this.sesionRepository.save(sesion);
+  async getSesionesMasOcupadas() {
+    return this.sesionRepository
+      .createQueryBuilder('s')
+      .leftJoinAndSelect('s.reservas', 'r')
+      .groupBy('s.id_sesion')
+      .orderBy('COUNT(r.id_reserva)', 'DESC')
+      .getMany();
   }
 
-  findAll(): Promise<Sesion[]> {
-    return this.sesionRepository.find();
-  }
-
-  findOne(id: number): Promise<Sesion> {
-    return this.sesionRepository.findOne({ where: { id_sesion: id } });
-  }
-
-  async update(id: number, updateSesionDto: UpdateSesionDto): Promise<Sesion> {
-    await this.sesionRepository.update(id, updateSesionDto);
-    return this.sesionRepository.findOne({ where: { id_sesion: id } });
-  }
-
-  async remove(id: number): Promise<void> {
-    await this.sesionRepository.delete(id);
+  async getSesionesMasDisponibles() {
+    return this.sesionRepository
+      .createQueryBuilder('s')
+      .leftJoinAndSelect('s.reservas', 'r')
+      .groupBy('s.id_sesion')
+      .orderBy('COUNT(r.id_reserva)', 'ASC')
+      .getMany();
   }
 }

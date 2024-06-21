@@ -1,47 +1,35 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Param,
-  Put,
-  Delete,
-} from '@nestjs/common';
+import { Controller, Get, Param, Query } from '@nestjs/common';
 import { EspacioTrabajoService } from './espacio-trabajo.service';
-import { CreateEspacioTrabajoDto } from './dto/create-espacio-trabajo.dto';
-import { UpdateEspacioTrabajoDto } from './dto/update-espacio-trabajo.dto';
 import { ApiTags } from '@nestjs/swagger';
 
-@ApiTags('Espaciotrabajo')
+@ApiTags('Espacio Trabajo')
 @Controller('espacio-trabajo')
 export class EspacioTrabajoController {
   constructor(private readonly espacioTrabajoService: EspacioTrabajoService) {}
 
-  @Post()
-  create(@Body() createEspacioTrabajoDto: CreateEspacioTrabajoDto) {
-    return this.espacioTrabajoService.create(createEspacioTrabajoDto);
-  }
-
-  @Get()
-  findAll() {
-    return this.espacioTrabajoService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.espacioTrabajoService.findOne(+id);
-  }
-
-  @Put(':id')
-  update(
-    @Param('id') id: string,
-    @Body() updateEspacioTrabajoDto: UpdateEspacioTrabajoDto,
+  @Get('disponibles')
+  getEspaciosDisponibles(
+    @Query('salaId') salaId: number,
+    @Query('sesionId') sesionId: number,
   ) {
-    return this.espacioTrabajoService.update(+id, updateEspacioTrabajoDto);
+    return this.espacioTrabajoService.getEspaciosDisponibles(salaId, sesionId);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.espacioTrabajoService.remove(+id);
+  @Get('ocupados')
+  getEspaciosOcupados(
+    @Query('salaId') salaId: number,
+    @Query('sesionId') sesionId: number,
+  ) {
+    return this.espacioTrabajoService.getEspaciosOcupados(salaId, sesionId);
+  }
+
+  @Get('usuario/:id')
+  getEspaciosPorUsuario(@Param('id') id: number) {
+    return this.espacioTrabajoService.getEspaciosPorUsuario(id);
+  }
+
+  @Get('sesion/:id')
+  getEspaciosPorSesion(@Param('id') id: number) {
+    return this.espacioTrabajoService.getEspaciosPorSesion(id);
   }
 }

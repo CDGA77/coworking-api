@@ -1,6 +1,19 @@
+import { IsInt, IsDate, IsNotEmpty } from 'class-validator';
+
 export class CreateReservaDto {
-  id_usuario: number;
-  id_espacio: number;
-  id_sesion: number;
-  fecha_reserva: Date;
+  @IsInt()
+  @IsNotEmpty()
+  readonly usuarioId: number;
+
+  @IsInt()
+  @IsNotEmpty()
+  readonly espacioId: number;
+
+  @IsInt()
+  @IsNotEmpty()
+  readonly sesionId: number;
+
+  @IsDate()
+  @IsNotEmpty()
+  readonly fechaReserva: Date;
 }

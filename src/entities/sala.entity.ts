@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 import { EspacioTrabajo } from './espacio-trabajo.entity';
 
 @Entity()
@@ -15,6 +15,6 @@ export class Sala {
   @Column()
   columnas: number;
 
-  @OneToMany(() => EspacioTrabajo, (espacioTrabajo) => espacioTrabajo.sala)
+  @OneToMany(() => EspacioTrabajo, (espacio) => espacio.sala)
   espacios: EspacioTrabajo[];
 }

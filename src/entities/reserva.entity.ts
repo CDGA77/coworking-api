@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 import { Usuario } from './usuario.entity';
 import { EspacioTrabajo } from './espacio-trabajo.entity';
 import { Sesion } from './sesion.entity';
@@ -11,12 +11,12 @@ export class Reserva {
   @ManyToOne(() => Usuario, (usuario) => usuario.reservas)
   usuario: Usuario;
 
-  @ManyToOne(() => EspacioTrabajo)
+  @ManyToOne(() => EspacioTrabajo, (espacio) => espacio.reservas)
   espacio: EspacioTrabajo;
 
   @ManyToOne(() => Sesion, (sesion) => sesion.reservas)
   sesion: Sesion;
 
-  @Column()
+  @Column({ type: 'timestamp' })
   fecha_reserva: Date;
 }
